@@ -1,0 +1,385 @@
+\documentclass{article}
+\title{Compsci 590T Homework 5}
+\usepackage[margin=1in]{geometry}
+\usepackage[loose,nice]{units}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{multirow,array}
+\newcommand{\pvec}[1]{\vec{#1}\mkern2mu\vphantom{#1}}
+\usepackage{amssymb}
+\usepackage{cancel}
+\usepackage{mathabx}
+\usepackage{hyperref}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+\usetikzlibrary{positioning}
+\tikzset{main node/.style={circle,fill=blue!20,draw,minimum size=4mm,inner sep=0pt},}
+\author{Student: Brian Sun, Collaborator: Thai On}
+\date{}
+
+\begin{document}
+\maketitle
+
+
+\section{Problem 1.a}
+1. Utilitarian:\\
+Base on the function $S$ we know:
+\begin{align*}
+\frac{x^2}{2} + y^2 &= 1\\
+y^2 &= \frac{-x^2}{2} + 1\\
+y &= \sqrt{\frac{-x^2}{2} + 1} \longrightarrow (\blackdiamond)
+\end{align*}
+Since the utilitarian is equal to max $u_1 + u_2$ and $u_1(x) = x$ and $u_2(y) = y$\\
+$$\therefore \ u_1 + u_2 = x + y = x + \sqrt{\frac{-x^2}{2} + 1}$$
+To find the maximum point we take the derivative and set it to $0$ and solve for $x$:
+\begin{align*}
+u_1 + u_2 &=x + \sqrt{\frac{-x^2}{2} + 1}\\
+(u_1 + u_2)' &= 1 + \frac{1}{2}(-\frac{x^2}{2} + 1)^{\frac{1}{2} - 1} \times \frac{d}{dx}\left(1 - \frac{x^2}{2}\right)\\
+&=1 + \frac{\frac{d}{dx}1 - \frac{1}{2} \times \frac{d}{dx}x^2}{2\sqrt{1 - \frac{x^2}{2}}}\\
+&= 1 + \frac{-x}{2\sqrt{1 - \frac{x^2}{2}}}
+\end{align*}
+solve for $x$ at max point by set the slope function to $0$
+\begin{align*}
+1 - \frac{x}{2\sqrt{1 - \frac{x^2}{2}}} &= 0\\
+\frac{x}{2\sqrt{1 - \frac{x^2}{2}}} &= 1\\
+x &= 2\sqrt{1 - \frac{x^2}{2}}\\
+x^2 &= 4(1 - \frac{x^2}{2})\\
+x^2 &= 4 - 2x^2\\
+3x^2 &= 4\\
+x &= \sqrt{\frac{4}{3}} \longrightarrow (\star)
+\end{align*}
+To make sure this is the max point not the min we have to derivative the slope function and plug $(\star)$ to make sure the value is negative:
+\begin{align*}
+(u_1 + u_2)' &= 1 - \frac{x}{2\sqrt{1 - \frac{x^2}{2}}}\\
+(u_1 + u_2)'' & = 0 - \frac{1}{2} \times \frac{d}{dx}\left(\frac{x}{\sqrt{1 - \frac{x^2}{2}}}\right)\\
+&= -\frac{1}{2} \times \left(\frac{x'\sqrt{1 - \frac{x^2}{2}} - x\left(\sqrt{1 - \frac{x^2}{2}}\right)'}{\left(\sqrt{1 - \frac{x^2}{2}}\right)^2}\right)\\
+&= -\frac{1}{2} \times \left(\frac{\sqrt{1 - \frac{x^2}{2}} - \frac{x\left( 0 - \frac{1}{2} \times 2x \right)}{2\sqrt{1 - \frac{x^2}{2}}}}{1 - \frac{x^2}{2}}\right)\\
+&= -\frac{1}{2} \times \frac{\sqrt{1 - \frac{x^2}{2}} + \frac{x^2}{2\sqrt{1 - \frac{x^2}{2}}}}{1 - \frac{x^2}{2}}\\
+&= -\frac{1}{2} \times\frac{\frac{2 - x^2 + x^2}{2\sqrt{1 - \frac{x^2}{2}}}}{1 - \frac{x^2}{2}}\\
+&= -\frac{1}{2\left(1 - \frac{x^2}{2}\right)^{\frac{3}{2}}}\\
+\text{plug $(\star)$ into the function:}\\
+&= -\frac{1}{2\left(1 - \frac{4}{6}\right)^{\frac{3}{2}}}\\
+&\because 1 > \frac{4}{6} \text{ , so the denominator is positive}\\
+&\therefore \text{this fraction is negative}
+\end{align*}
+Base on $(\star)$ we can find $y$:
+\begin{align*}
+y^2 &= \frac{-x^2}{2} + 1\\
+&= \frac{4}{6} + 1\\
+&= \frac{1}{3}\\
+y &= \sqrt{\frac{1}{3}}
+\end{align*}
+So the socially optimal value is:
+$$u_1\left(\sqrt{\frac{4}{3}}\right) + u_2\left(\sqrt{\frac{1}{3}}\right) = \sqrt{\frac{4}{3}} + \sqrt{\frac{1}{3}} = \frac{3}{\sqrt{3}}$$
+2. Nash:
+Since we are trying to find the max of $u_1 \times u_2$ and base on $(\blackdiamond)$ we know $u_1 \times u_2 = x \sqrt{\frac{-x^2}{2} + 1}$\\
+since we are trying to find the max, so derivative the function and solve for $x$ by set the function to 0:
+\begin{align*}
+u_1 \times u_2 &= x \sqrt{\frac{-x^2}{2} + 1}\\
+(u_1 \times u_2)' &= \sqrt{1-\frac{x^2}{2}} + \frac{x}{2} \left(1 - \frac{x^2}{2}\right)^{-\frac{1}{2}} \times \left(1-\frac{x^2}{2}\right)'\\
+&= \sqrt{1-\frac{x^2}{2}} + \frac{x}{2\sqrt{1 - \frac{x^2}{2}}} \times (0 - x)\\
+&= \sqrt{1-\frac{x^2}{2}} - \frac{x^2}{2\sqrt{1 - \frac{x^2}{2}}}\\
+&= -\frac{x^2 - 1}{\sqrt{1 - \frac{x^2}{2}}}
+\end{align*} 
+solve for $x$ at max point by set the slope function to $0$
+\begin{align*}
+-\frac{x^2 - 1}{\sqrt{1 - \frac{x^2}{2}}} &= 0\\
+x^2 - 1 &= 0\\
+x &= \sqrt{1}\\
+&= 1 \longrightarrow (\sqbullet)
+\end{align*} 
+To make sure this is the max we need to derivative the slope function and plug $(\sqbullet)$ into the function to make sure the value is negative:
+\begin{align*}
+(u_1 \times u_2)' &= -\frac{x^2 - 1}{\sqrt{1 - \frac{x^2}{2}}}\\
+(u_1 \times u_2)'' &= \frac{\left(1-x^2\right)'\sqrt{1 - \frac{x^2}{2}} - (1-x^2)\left(\sqrt{1 - \frac{x^2}{2}}\right)'}{1- \frac{x^2}{2}}\\
+&= \frac{-2x\sqrt{1-\frac{x^2}{2}} - (1-x^2)\frac{1}{2}\left(1-\frac{x^2}{2}\right)^{-\frac{1}{2}}\left(1-\frac{x^2}{2}\right)'}{1-\frac{x^2}{2}}\\
+&= \frac{-2x\sqrt{1-\frac{x^2}{2}} - \frac{(1-x^2)(0-x)}{2\sqrt{1 - \frac{x^2}{2}}}}{1-\frac{x^2}{2}}\\
+&= \frac{-2x\sqrt{1-\frac{x^2}{2}} + \frac{x(1-x^2)}{2\sqrt{1 - \frac{x^2}{2}}}}{1-\frac{x^2}{2}}\\
+&= \frac{x(1-x^2)}{2\left(1 - \frac{x^2}{2}\right)^{\frac{3}{2}}} - \frac{2x}{\sqrt{1-\frac{x^2}{2}}}\\
+&= \frac{x(x^2-3)}{2\left(1-\frac{x^2}{2}\right)^{\frac{3}{2}}}\\
+\text{plug $(\sqbullet)$ into the function:}\\
+&= \frac{1-3}{2\left(1-\frac{1}{2}\right)^{\frac{3}{2}}}\\
+&\because \text{numerator is negative and denominator is positive}\\
+&\therefore \text{this fraction is negative}
+\end{align*} 
+Base on $(\sqbullet)$ and $(\blackdiamond)$ we can find $y$:
+\begin{align*}
+y &= \sqrt{-\frac{x^2}{2} + 1}\\
+&= \sqrt{-\frac{1}{2} + 1}\\
+&= \sqrt{\frac{1}{2}}
+\end{align*} 
+So the Nash value is:
+$$u_1(1) \times u_2\left(\sqrt{\frac{1}{2}}\right) = 1 \times \sqrt{\frac{1}{2}} = \sqrt{\frac{1}{2}}$$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Problem 1.b}
+1. Utilitarian:
+Base on the function $S$ we know:
+\begin{align*}
+x + y &= 1\\
+y &= 1 - x \longrightarrow (\blackdiamond)
+\end{align*}
+Base on this we know the Utilitarian is:
+$$u_1 + u_2 = x^a + y = x^a + 1 - x$$
+Base on the given information we know $x \in [0,1]$ and $y = 1 - x$ therefore we need to find the highest point in $x^a + 1 - x\ |\ x \in [0,1]$.\\\\
+The highest point will be $(0,1)$ and $(1,0)$ which is $u_1 + u_2 = 1$ when $x = 0, y = 1$ or $x = 1, y = 0$\\\\
+To prove this is correct we can take the derivative of $x^a + 1 - x$ and show there is only one minimum point in range of $x \in [0,1]$. Which indicated that is the only turning point in range of $x \in [0,1]$, so when $x = 1$ or $x = 0$ will always be the highest point.\\\\
+Find the minimum point of $u_1 + u_2 = x^a + 1 - x\ |\ x \in [0,1]$
+\begin{align*}
+u_1 + u_2 &= x^a + 1 - x\\
+(u_1 + u_2)' &= ax^{a-1} - 1\\
+\end{align*}
+solve for $x$ by set $(u_1 + u_2)' = 0$
+\begin{align*}
+ax^{a-1} - 1 &= 0\\
+ax^{a-1} &= 1\\
+x^{a-1} &= \frac{1}{a}\\
+x^{a-1} &= \frac{1}{a}\\
+x &= \left(\frac{1}{a}\right)^{\frac{1}{a-1}} \longrightarrow (\star)
+\end{align*}
+To make sure this is the min we take the derivative of the slope function and plug $(\star)$ into the function to make sure it's positive.
+\begin{align*}
+&(u_1 + u_2)' = ax^{a-1} - 1\\
+&(u_1 + u_2)'' = a(a-1)x^{a-2}\\
+&\because a > 1 \text{ and } (\star) > 0\\
+&\therefore a(a-1)\left(\left(\frac{1}{a}\right)^{\frac{1}{a-1}}\right)^{a-2} > 0\\
+\end{align*}
+Since the we got a positive number, therefore $(\star)$ is the min.\\
+And since we know $(\star)$ is a positive number as well as $a$ is constant, therefore $(\star)$ is in range of $(0,1)$. \\
+And base on the utility function of $u_1 + u_2$ we know no matter what value $a$ is the line always cross the point of $(1,0)$ and $(0,1)$. Therefore those are the best points.\\\\
+And base on this we know the socially optimal value is: $$u_1(1) + u_2(0) = 1^a + 0 = 1$$
+$$u_1(0) + u_2(1) = 0^a + 1 = 1$$
+2. Nash: Since we are finding the value of $u_1 \times u_2$ and base on $\blackdiamond$ we know $u_1 \times u_2 = x^a - x^{a+1}$\\
+Because we are trying to find the max, so derivative the function and solve for $x$ by set the function to $0$.
+\begin{align*}
+u_1 \times u_2 &= x^a - x^{a+1}\\
+(u_1 \times u_2)' &= ax^{a-1} - (a+1)x^{a}\\
+&= x^{a-1}(a - (a+1)x)\\
+x^{a-1}(a - (a+1)x) &= 0\\
+x &= 0, \frac{a}{a+1}\\
+\end{align*}
+to make sure this is the max we make sure the derivative of this slope functions plug in $x$ to see if the value is negative.
+\begin{align*}
+&(u_1 \times u_2)' = ax^{a-1} - (a+1)x^{a}\\
+&(u_1 \times u_2)'' = (a^2-a)x^{a-2} - (a^2+a)x^{a-1}\\
+\text{if } x = \frac{a}{a-1}\\
+&\because a^2-a < a^2+a \text{ and } x^{a-2} < x^{a-1}\\
+&\therefore (u_1 \times u_2)'' < 0\\
+\end{align*}
+$\tab \tab \tab \tab$if $x = 0$
+\begin{align*}
+(u_1 \times u_2)'' &= (a^2-a)0^{a-2} - (a^2+a)0^{a-1}\\
+&= 0\\
+\therefore(u_1 \times u_2)'' &\not < 0
+\end{align*}
+So we know the best point is when at $x = \frac{a}{a+1}$. And base on $\blackdiamond$ we know: $y = 1 - \frac{a}{a+1}$
+So the Nash value is:
+$$u_1\left(\frac{a}{a+1}\right) \times u_2\left(1 - \frac{a}{a+1}\right) = \left(\frac{a}{a+1}\right)^a \times \left(1 - \frac{a}{a+1}\right) = \left(\frac{a}{a+1}\right)^a - \left(\frac{a}{a+1}\right)^{a+1}$$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Problem 1.c}
+1. Utilitarian: Base on the function $S$ we know:
+\begin{align*}
+x + y &= 2\\
+y &= 2-x \longrightarrow (\blackdiamond)
+\end{align*}
+Which we know the function of $u_1 + u_2$ is: $\log(x) + \log(2-x)$.\\
+Find the maximum point by take the derivative of this function and solve for $x$ by set the function to $0$:
+\begin{align*}
+u_1 + u_2 &= \log(x) + \log(2-x)\\
+(u_1 + u_2)' &= \frac{1}{x} + \frac{1}{2-x} \times \frac{d}{dx}(2-x)\\
+&= \frac{1}{x} - \frac{1}{2-x}\\
+&= \frac{2-2x}{x(2-x)}\\
+\frac{2-2x}{x(2-x)} &= 0\\
+2-2x &= 0\\
+x &= 1\\
+\end{align*}
+To make sure the max is when $x = 1$ we need to take the derivative for the function again and check if the value with $x$ is negative.
+\begin{align*}
+(u_1 + u_2)' &= \frac{1}{x} + \frac{1}{2-x} \times \frac{d}{dx}(2-x)\\
+(u_1 + u_2)'' &= -x^{-2} + (2-x)^{-2} \times \frac{d}{dx}(2-x) \\
+&= -x^{-2} - (2-x)^{-2}\\
+\end{align*}
+Since this function is negative and $x = 1$ therefore the value is also negative.\\
+Base on $(\blackdiamond)$ we know $y = 2-1 = 1$\\
+Therefore the social optimal vlaue is:
+$$u_1(1) + u_2(2) = \log(1) + \log(1) = 0$$\\\\
+2. Nash: Base on $(\blackdiamond)$ we know the function of nash is: $u_1 \times u_2 = \log(x) \times \log(2-x)$ to find to find out the highest value we take the derivative of this function and set it to $0$ and solve for $x$.
+\begin{align*}
+u_1 \times u_2 &= \log(x) \times \log(2-x)\\
+(u_1 \times u_2)' &= \frac{1}{x} \ln{(2-x)} + \frac{1}{2-x} (2-x)' \ln{(x)} \\
+ &= \frac{1}{x} \ln{(2-x)} -\frac{1}{2-x}\ln{(x)} \\
+ \frac{1}{x} \ln{(2-x)} -\frac{1}{2-x}\ln{(x)} &= 0\\
+ \frac{-x}{x(2-x)}\ln(x) + \frac{2-x}{x(2-x)} \ln(2-x) &= 0\\
+ -x\ln(x) + 2\ln(2-x) -x\ln(2-x)&= 0\\
+ x\ln\left(\frac{x}{2-x}\right) - 2\ln(2-x) &= 0\\
+ \ln\left(\frac{\left(\frac{x}{2-x}\right)^x}{(2-x)^2}\right) &= 0\\
+\ln\left(\frac{x^x}{(2-x)^{2-x}}\right) &= 0\\
+x^x &= (2-x)^{2-x}\\
+\text{prove by contradiction we know: }\\
+x &= 2-x\\
+x &= 1
+\end{align*}
+To make sure $x = 1$ is the max, we have to take the derivative again to see is the value negative or not.
+\begin{align*}
+(u_1 \times u_2)' &= \frac{1}{x} \ln{(2-x)} -\frac{1}{2-x}\ln{(x)}\\
+(u_1 \times u_2)'' &= -x^{-2}\ln(2-x) + \frac{1}{2-x}(2-x)'x^{-1} + (2-x)^{-2}(2-x)'\ln(x) + \frac{-1}{x}(2-x)^{-1}\\
+&= -x^{-2}\ln(2-x) - \frac{1}{2-x}x^{-1}-(2-x)^{-2}\ln(x)-\frac{1}{x}(2-x)^{-1}\\
+&= \frac{-\ln(x)}{(2-x)^2} - \frac{2}{(2-x)x} - \frac{\ln(2-x)}{x^2}\\
+\text{set $x = 1$}\\
+&= \frac{-\ln(1)}{(2-1)^2} - \frac{2}{(2-1)1} - \frac{\ln(2-1)}{1^2}\\
+&= -2
+\end{align*}
+since the result is negative, therefore we know the max value is when $x = 1$.\\
+Base on $\blackdiamond$ we know $y = 2-1 = 1$. So the Nash value is:
+$$u_1(1) \times u_2(1) = log(1) \times log(1) = 0$$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Problem 2.a}
+
+Given $S \subseteq N$ we know there will have two main situations:\\
+1: the edges in $S$ can make at least one path from $s$ to $t$\\
+2: the edges in $S$ cannot make a path from $s$ to $t$\\\\
+First situation:\\
+we know if there are at least one path from $s$ to $t$ that means the maximum flow is greater than $0$. Which another way to say it is base on the min cut max flow theorem there exist at least a cut that it's value is equal to the max flow. Then we call this cut $C^* \subseteq S$, $C^*$ contain all the edges that gets cut and let $w(C^*)$ be the value of the sum of all weight in $C^*$.\\
+$\bullet$ let $w(C)$ be the general term of the sum of weight for the cut.\\
+$(\blackdiamond)$ because $v(S)$ is the maximum flow that can pass from $s$ to $t$ so $v(S) = w(C^*)$\\\\
+Base on the definition of superadditive we know $v(S \cup T) \geq v(S) + v(T) \longrightarrow (\star)$. To prove this is true we can show it by adding new edge into $S$ and show the the maximum flow value will either be the same or increase and will never decrease Therefore, keep repeating the process of every edges in $T$ will give out the same result.\\
+While adding the new edge $e_i$ into $S$ there will have $3$ cases will happen:\\
+$\circled{1}$ : The new edge effects all the cuts.\\
+If the new edge effects all the cuts that mean this edge is link from $s$ to $t$ since the meaning of the cut is to separate $S$ into two sup-set, one set contain $s$ the other one contain $t$, so no path can go from one set to the other. Therefore if there exist a cut that didn't get effect by this new edge than that means this new edge didn't get cut, and since this edge link from $s$ to $t$, therefore $s$ and $t$ are in the same set, which violate the meaning of the cut.\\
+Since the new edge effect all cuts, so all the cut will increase $w_i$, therefore the maximum flow will be $v(C^*) + w_i$.\\
+Which satisfy the condition of superadditive, since $w(C^*) + v(e_i) = w(C^*) + w_i \leq v(S \cup e_i)$ and base on $(\blackdiamond)$ we know this match $(\star)$\\\\
+$\circled{2}$ : The new edge effects all the cuts but didn't effect $C^*$.\\
+In this case since $e_i$ did not effect $C^*$ so the maximum flow will remain the same. This is true because $C^*$ is the best cut in the original set and $w_i$ is a positive value so the cut get effect by this new edge will only increase it's value and cannot decrease.\\
+Which satisfy the condition of superadditive, since $w(C^*) + v(e_i) = w(C^*) + 0 \leq v(S \cup e_i)$ and base on $(\blackdiamond)$ we know this match $(\star)$\\\\
+$\circled{3}$ : There are at least one cut other than $C^*$ didn't get effect by the new edge.\\
+In this case since $C^*$ gets effect by the new edge. So we need to make sure is $C^*$ still the best cut. The way to verify it is to compare $v(C^*) + w_i$ and the cut that didn't get effect by the new edge. The reason of why we don't need to compare the other cuts that get effect by the new edge is because we know $C^*$ is still better than those cut. Since these cuts increase $w_i$ including $C^*$ therefore $C^*$ is still better. \\
+set $C'$ is the lowest cut amount of all the non-effected cuts.\\\\ If $w(C') > w(C^*) + w_i$ than we know the maximum flow will be $w(C^*) +w_i$ since there are no better cut than $C^*$.\\
+This satisfy the condition of superadditive, since $w(C^*) + v(e_i) = w(C^*) + w_i \leq v(S \cup e_i)$ and base on $(\blackdiamond)$ we know this match $(\star)$\\\\
+If $w(C') \leq w(C^*) + w_i$ than $C'$ will become the new set of edges of the new min cut. And if $w(C') = w(C^*)$ than we know the maximum flow stay the same, if  $w(C') > w(C^*)$ than the maximum flow will increase from $w(C^*)$ to $w(C')$.\\
+This satisfy the condition of superadditive, since $w(C^*) + v(e_i) \leq w(C') + v(e_i) = w(C') + 0 \leq v(S \cup e_i)$
+since $w(C')$ is the new min cut, so $w(C') = v(S)$ which match $(\star)$\\\\
+Second situation:\\
+if there are no edges in $S$ cant make path from $s$ to $t$ than that means the maximum flow is $0$ since there are no flow from $s$ to $t$. Which means $C^* = 0$.\\
+To prove this is true we do the same action in first situation by add new edge into $S$.
+While adding the new edge $e_i$ into $S$ there will have $2$ cases will happen:\\
+$\circled{1}$ : This new edge creates a path from $s$ to $t$. than this can link back to the first situation.\\\\
+$\circled{2}$ : This new edge cannot create the path. In this case since there are no path from $s$ to $t$ therefore the maximum flow still remain $0$. This satisfy the condition of superadditive, since $w(C^*) + v(e_i) \leq w(C^*) + 0 \leq v(S \cup e_i)$ and base on $(\blackdiamond)$ we know this match $(\star)$.\\\\
+Therefore all the cases that cover what happen when there is a new edge add into $S$ are satisfy the condition of superadditive, therefore this network flow game is superadditive.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Problem 2.b}
+For all the edges in minimum cut $e_i \in C$ the flow capacity of those edges will be fill. Since the minimum cut is the cut of smallest size among all cuts. And cut is separate the graph into two disjoint subsets and one subset contain $s$ the other contain $t$. So since the value of minimum cut is equal to the maximum flow which if we connect these two disjoint subsets by undo the minimum cut the edge must be fill.\\\\
+$(\star)$Given an optimal $s-t$ flow $f^*$ through $G$. let $C \subseteq N$ be a minimum cut. And paying each player $i \in C$ the amount that flows through their edge is a core payoff\\\\
+If the core of the network flow game is empty that means the game cannot satisfy coalitional rationality or efficiency or both.\\\\
+$\bullet$ For efficiency if the core is empty, there will have two cases which is $\sum_{i \in S} x_i < f^*$ or $\sum_{i \in S} x_i > f^*$\\\\
+1: For $\sum_{i \in S} x_i < f^*$:\\
+If this happen that means the sum of edge $e_i$ in the minimum cut $C$ is less then the maximum flow $f^*$ which cannot happen, since the value of minimum cut is the sum of the weights in the cut and base on min cut max flow theorem the value of minimum cut must equal to maximum flow.\\\\
+2: For $\sum_{i \in S} x_i > f^*$:\\
+If this happen that means the sum of edge $e_i$ in the minimum cut $C$ is larger then the maximum flow $f^*$ which cannot happen too, since base on min cut max flow theorem the value of minimum cut must equal to maximum flow.\\\\
+Therefore these two cases cannot happen which means only pay the players in the minimum cut satisfy efficiency.\\\\
+$\bullet$ For coalitional rationality if the core is empty that means $v(S) > \sum_{i \in S} x_i$ might happen.\\
+If this actually happen that means the maximum flow $f^*$ for $S$ is larger than the pay for all the player in $S$.\\\\
+1: If there are no path in $S$ than that means the maximum flow $f^* = 0$ and base on $(\star)$ we only pay the player in the minimum cut which shows $v(S) > \sum_{i \in S} x_i$ cannot happen. Since $v(S) = 0$ and $\sum_{i \in S} x_i \geq 0$\\\\
+2: If there are a least one path in $S$ than that means the maximum flow $f^* > 0$ and is larger than sum of pay for all player in $S$.\\
+We know the the sub graph $S$ must have player in the minimum cut  $C$ since there is path.\\
+$(\blackdiamond)$ We also know minimum cut is a cut and the definition of a cut is make the graph into two disjoint subsets. which another way to say this is: there is no way the graph can have a path from $s-t$ if the graph don't have any edges that is in the cut.\\
+Base on $(\blackdiamond)$ we also know the subset $S \subseteq G$ that has node $s,t$ will also split into two disjoint sub graph.\\\\
+Which means if $v(S) > \sum_{i \in S} x_i = \sum_{i \in C\wedge s} x_i$ happen there exist a cut that $v(S)$ using is larger than the sum of pay for player who are in $C \wedge S$. And this contradict the fact that the value of $v(S)$ is the minimum cut.\\
+The fact that $v(S) > \sum_{i \in C\wedge S}x_i$ shows that there exist better cut than $v(S)$ is using. Base on $(\blackdiamond)$ we know $\sum_{i \in C\wedge S}x_i$ is also a valid cut since if $S$ don't have any $e_i \in C\wedge S$ then there is no more path which will create two disjoint subsets one contain $s$ one contain $t$ which satisfy the definition of a cut. And this is in fact lesser than $v(S)$ therefore $v(S) > \sum_{i \in S}x_i$ cannot happen.\\\\
+Therefore these two cases cannot happen which means only pay the players in the minimum cut satisfy coalitional rationality.\\\\
+Since only pay the players in the minimum cut satisfy both coalitional rationality and efficiency, therefore the core is not empty.
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{3.a}
+
+Given that $CS^*$ is optimal coalition structure so we know the number of winning coalition in $CS^*_+$ is $OPT(G)$.\\
+Base on the given information $CS^* = \{CS^*_+,\text{(losing coalition)}\}$\\\\
+Since we are arguing $CS^*$ can be lean, which base on the condition of lean we need to prove $S \in CS^*_+$ can be $ S\setminus \{i\}$ is losing as well as the number (losing coalition) is at most one.\\\\
+For $S \in CS^*_+$ there are $2$ types of $S$.\\
+$1:$ $S \in CS^*_+$ is that $i \in S,\ S \setminus \{i\}$ is winning. \\
+Since we are arguing that $CS^*_+$ can be lean which in this case we can take the $i$ away from $S$ because if $i$ is in $S$ than this cannot satisfy the condition of being lean. As well as it is fine to take the $i$ away because this action won't increase the number of winning coalition in $CS^*$ because if $i$ can win by itself than it contradict the definition of $CS^*$.\\\\
+$2:$ $i \in S,\ S\setminus \{i\}$ is losing. In this case we don't need to do anything, since this already satisfy the condition of being lean. \\\\
+For $(\text{losing coalition}) \in CS^*$ there are $2$ types as well:\\
+$1:$ there are more than one $(\text{losing coalition})$, in this case we can combine all these coalitions to one losing coalition. We can do this is because combine all these coalitions won't form a winning coalition. The reason of why they won't form a winning coalition is because if they actually form one, than it contradict the definition of $CS^*$. Therefore we can combine all these coalitions to one losing coalition and this satisfy both condition of $CS^*$ and lean.\\\\
+$2: $ There are only one $(\text{losing coalition})$ or $(\text{losing coalition})$ is empty. This case is already satisfy the condition of being lean. Since the number of losing coalition is at most one.\\\\
+
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Problem 3.b}
+Given $CS^*$ is lean so $CS^*_+$ is also lean therefore
+given $|S| \geq 2$ we know there are no single player win by itself.\\\\
+$(\star)$ Base on the definition of lean we know: every player $i \in S,\ S\setminus i$ is losing. Therefore $w(S \setminus i) < q$ and $w_i < q$ because if $w(S \setminus i) \geq q$ or  $w_i \geq q$ that means they can win by itself since they reach the threshold, which contradict the definition of being lean.\\\\
+Therefore to prove $w(S) < 2q$ we need to show $w(S\setminus i) + w_i < 2q$ and $w(S\setminus i) + w_i \not \geq 2q$, the reason why I write $w(S)$ to $w(S\setminus i) + w_i$ is because I want to prove it while showing it satisfy the lean condition. \\
+Then there will have 4 cases.\\
+1. when $w(S \setminus i) < q,\ w_i < q$\\
+2. when $w(S \setminus i) \geq q,\ w_i < q$\\
+3. when $w(S \setminus i) < q,\ w_i \geq q$\\
+4. when $w(S \setminus i) \geq q,\ w_i \geq q$\\
+base these cases we know cases 2,3,4 are not going to happen base on $(\star)$.\\\\
+which the only case 1 can happen and base on the logic of math $w(S \setminus i) + w_i < 2q \tab \because w(S \setminus i) < q,\ w_i < q$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Problem 3.c}
+Base on $3.a$ we know given any $CS^*$ we can make into lean.\\
+$\sum_{i\in N \setminus B}^{n} w_i$ is the sum of all weight $w_i$ that each individual weight are less than $q$ since we are only focusing on $i \in N \setminus B$. Since all weight are less than $q$, which means $w_i$ cannot win by itself because it's value can not reach the threshold. Since all weight are less than $q$ which in order to have winning coalition $|S|$ must be larger or equal to $2$. Therefore base on $3.a$ we can see it as: $$\sum_{S \in CS^*_+} w(S) + w(\text{losing coalition})$$
+Since $CS^*_+$ is the set of winning coalitions in $CS^*$ whose size is more than $2$ therefore $w_i \in CS^*_+,\ w_i < q$ as well as $w(\text{losing coalition})$ is sum of all weights that is less than $q$ and still cannot form a winning coalition. therefore $\sum_{S \in CS^*_+} w(S) + w(\text{losing coalition})$ includes all the weight that is less than $q$ and equal to $\sum_{i\in N \setminus B}^{n} w_i$.\\\\
+Base on $3.b$ we know $S\in CS^*_+,\ w(S) < 2q$ therefore we know $\sum_{S \in CS^*_+} w(S) < 2q|CS^*_+|$ as well as $w(\text{losing coalition}) < q$, because if $w(\text{losing coalition}) > q$ than means we got a new winning coalition which contradict the setting of $CS^*$.\\\\
+Therefore $$\sum_{S \in CS^*_+} w(S) + w(\text{losing coalition}) < 2q|CS^*_+| + q$$ which another way of saying this is:
+$$\sum_{i\in N \setminus B}^{n} w_i < 2q|CS^*_+| + q$$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Problem 3.d}
+
+For the winning coalitions we know the reason why it's winning is because the sum of the weights in that coalition is larger or equal to the threshold.\\\\
+We know there are two ways to pay the player, one is if the player itself larger than threshold than that player get $1$ and the other on is the player itself less than the threshold than that player get pay $\frac{w_i}{q}$\\\\
+So we can say this is in the core, because it satisfy both coalitional rationality and efficiency.\\\\
+For coalitional rationality:\\
+$(\star)$To be able to satisfy coalitional rationality, we know $S \in CS^*,\ v(S) \leq \sum_{i\in S} x_i$ must be true.\\
+since $CS^*$ is optimal and lean therefore there will have three types of $S$ that $w_i$ can be in: 1. $S \in B$, or $S\in CS^*_+$ or $S = (\text{losing coalition})$.\\
+And we know if $S \in CS^*$ or $S\in CS^*_+$ those are the winning coalitions which $v(S) = 1$.
+and $S = (\text{losing coalition})$ is the losing coalition which $v(S) = 0$.\\\\
+1. For the winning coalitions $S \in B$ we know $|S| = 1$ since all the weights in $B$ are larger than $q$. Base on payoff division, all the $x^*_i \in B$ get pay $1$ which means $\sum_{i \in S} w_i = 1 = v(S)$ which satisfy $(\star)$\\\\
+2. For the winning coalitions $S \in CS^*_+$ we know $|S| \geq 2$, there for there are more than one $x^*_i$ in $S$ and this is also satisfy $(\star)$ because if $1 \leq \sum_{i \in S}\frac{w_i}{q}$ that means $\sum_{i \in S} w_i < q$, and this can never happen because $S$ is a winning coalition which $\sum_{i \in S} w_i$ must larger or equal to $q$.\\\\
+3. For the losing coalition $S = (losing coalition)$ we know this losing which $v(S) = 0$ and $\sum_{i \in S} \frac{w_i}{q} < q$
+so $\sum_{i \in S} \frac{w_i}{q} \geq 0$ which satisfy $(\star)$.\\\\
+For efficiency:
+Base on $3.c$ we know: 
+\begin{align*}
+&\sum_{i \in N\setminus B}^n w_i < 2q|CS^*_+| + q\\
+&=\sum_{i \in N\setminus B}^n w_i < q(2|CS^*_+| + 1)\\
+&=\sum_{i \in N\setminus B}^n \frac{w_i}{q} < 2|CS^*_+| + 1 \longrightarrow \circled{1}
+\end{align*}
+Base on the payoff division for $i \in B$:
+$$\sum_{i \in B}^n w_i = 1 \times (|OPT(G)| - |CS^*_+|) \longrightarrow \circled{2}$$
+Therefore we know:
+\begin{align*}
+\circled{1} + \circled{2} \longrightarrow \sum_{i \in N}^n w_i &< 2|CS^*_+| + 1 + |OPT(G)| - |CS^*_+|\\
+&< |OPT(G)| + |CS^*_+| + 1
+\end{align*}
+Since $CS^*_+$ is a subset of $CS^*$ and $|CS^*| = |OPT(G)|$ so $|CS^*_+| < |OPT(G)|$\\
+Because $|CS^*_+| < |OPT(G)|$ therefore:
+$$\sum_{i \in N}^n w_i < 2|OPT(G)| + 1$$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Problem 4}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
